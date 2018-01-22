@@ -6,17 +6,33 @@ import android.view.View;
 import android.widget.CalendarView;
 import android.widget.EditText;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnFocusChangeListener {
+
+    private EditText editText;
+    private CalendarView calendarView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        editText = (EditText) findViewById(R.id.text_1);
+        calendarView = (CalendarView) findViewById(R.id.calendarView);
+
+        editText.setOnFocusChangeListener(this);
+    }
+
+    public void onFocusChange(View view, boolean hasFocus) {
+        if (hasFocus) {
+            calendarView.setVisibility(View.GONE);
+        } else {
+            calendarView.setVisibility(View.VISIBLE);
+        }
     }
 
     public void onClick(View view) {
-        CalendarView calendar = (CalendarView) findViewById(R.id.calendarView);
+        /*CalendarView calendar = (CalendarView) findViewById(R.id.calendarView);
         EditText editText = (EditText) view;
-        calendar.setVisibility(View.GONE);
+        calendar.setVisibility(View.GONE);*/
     }
 }
