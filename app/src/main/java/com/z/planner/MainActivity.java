@@ -25,7 +25,9 @@ public class MainActivity extends AppCompatActivity implements View.OnFocusChang
     @Override
     public void onBackPressed() {
         if (editText.isFocused()) {
-            editText.setFocusableInTouchMode(false);
+            editText.clearFocus();
+            calendarView.setVisibility(View.VISIBLE);
+            System.out.println("Test");
         }
         super.onBackPressed();
     }
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnFocusChang
     public void onFocusChange(View view, boolean hasFocus) {
         if (hasFocus) {
             calendarView.setVisibility(View.GONE);
+            calendarView.setVisibility(View.VISIBLE);
         } else {
             calendarView.setVisibility(View.VISIBLE);
         }
