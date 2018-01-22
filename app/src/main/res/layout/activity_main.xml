@@ -29,6 +29,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:ems="10"
+        android:windowSoftInputMode="adjustResize"
         android:hint="Zadajte text..."
         android:inputType="text|textCapWords|textCapSentences|textAutoCorrect|textMultiLine|textEmailAddress|textShortMessage|textLongMessage|textPersonName|phone|datetime|date|time"
         app:layout_constraintBottom_toBottomOf="parent"
