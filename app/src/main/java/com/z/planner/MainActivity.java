@@ -25,8 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnFocusChang
     @Override
     public void onBackPressed() {
         if (editText.isFocused()) {
-            editText.setFocusableInTouchMode(true);
-            editText.requestFocus();
+            editText.setFocusableInTouchMode(false);
         }
         super.onBackPressed();
     }
