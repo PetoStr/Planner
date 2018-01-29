@@ -1,12 +1,20 @@
 package com.z.planner;
 
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnFocusChangeListener {
+import java.text.SimpleDateFormat;
+
+public class MainActivity extends AppCompatActivity {
 
     private EditText editText;
     private CalendarView calendarView;
@@ -19,31 +27,36 @@ public class MainActivity extends AppCompatActivity implements View.OnFocusChang
         editText = (EditText) findViewById(R.id.text_1);
         calendarView = (CalendarView) findViewById(R.id.calendarView);
 
-        editText.setOnFocusChangeListener(this);
+        editText.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+
+            @Override
+            public void onGlobalLayout() {
+                Rect rect = new Rect();
+                editText.getWindowVisibleDisplayFrame(rect);
+
+                int keypadHeight = editText.getRootView().getHeight() - rect.bottom;
+
+                if (keypadHeight > 0) { /* keyboard is opened */
+                    calendarView.setVisibility(View.GONE);
+                    editText.setTop(5);
+
+                } else { /* keyboard is closed */
+                    calendarView.setVisibility(View.VISIBLE);
+                    storeCalendarData(calendarView.getDate(), editText.getText());
+                }
+
+            }
+        });
     }
 
-    @Override
-    public void onBackPressed() {
-        if (editText.isFocused()) {
-            editText.clearFocus();
-            calendarView.setVisibility(View.VISIBLE);
-            System.out.println("Test");
-        }
-        super.onBackPressed();
-    }
+    public void storeCalendarData(long time, Editable text) {
+        String date = new SimpleDateFormat("dd/MM/yyyy").format(time);
 
-    public void onFocusChange(View view, boolean hasFocus) {
-        if (hasFocus) {
-            calendarView.setVisibility(View.GONE);
-            calendarView.setVisibility(View.VISIBLE);
-        } else {
-            calendarView.setVisibility(View.VISIBLE);
-        }
+        Toast.makeText(this, "date: " + date, Toast.LENGTH_LONG).show();
     }
 
     public void onClick(View view) {
-        /*CalendarView calendar = (CalendarView) findViewById(R.id.calendarView);
-        EditText editText = (EditText) view;
-        calendar.setVisibility(View.GONE);*/
+
     }
 }
