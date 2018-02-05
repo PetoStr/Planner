@@ -1,8 +1,7 @@
 package com.z.planner;
 
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -19,13 +18,15 @@ public class MainActivity extends AppCompatActivity {
     private EditText editText;
     private CalendarView calendarView;
 
+    private PlannerDatabase plannerDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editText = (EditText) findViewById(R.id.text_1);
-        calendarView = (CalendarView) findViewById(R.id.calendarView);
+        editText = findViewById(R.id.text_1);
+        calendarView = findViewById(R.id.calendarView);
 
         editText.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -48,15 +49,27 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int dayOfMonth) {
+                long time = calendarView.getDate();
+                String date = new SimpleDateFormat("dd/MM/yyyy").format(time);
+                editText.setText(plannerDatabase.getPlan(date).split(":")[1]);
+            }
+        });
+
+        plannerDatabase = new PlannerDatabase(getApplicationContext());
     }
 
     public void storeCalendarData(long time, Editable text) {
         String date = new SimpleDateFormat("dd/MM/yyyy").format(time);
 
-        Toast.makeText(this, "date: " + date, Toast.LENGTH_LONG).show();
+        plannerDatabase.storePlan(date, text.toString());
+
+        String stored = plannerDatabase.getPlan(date);
+        //Toast.makeText(this, stored, Toast.LENGTH_SHORT).show();
     }
 
-    public void onClick(View view) {
-
-    }
 }
