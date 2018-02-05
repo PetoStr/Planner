@@ -8,32 +8,28 @@
 
     <CalendarView
         android:id="@+id/calendarView"
-        android:layout_width="371dp"
-        android:layout_height="304dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="367dp"
+        android:layout_height="230dp"
+        android:layout_marginBottom="20dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/text_1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.505" />
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/text_1"
         android:layout_width="342dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:inputType="textMultiLine"
         android:ems="10"
-        android:windowSoftInputMode="adjustResize"
         android:hint="Zadajte text..."
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:inputType="textMultiLine"
+        android:windowSoftInputMode="adjustResize"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="263dp" />
 
 </android.support.constraint.ConstraintLayout>
