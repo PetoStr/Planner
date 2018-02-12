@@ -29,6 +29,8 @@ public class PlannerDatabase extends SQLiteOpenHelper {
 
     private Context context;
 
+    private boolean isSuccessful;
+
     public PlannerDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
@@ -49,12 +51,12 @@ public class PlannerDatabase extends SQLiteOpenHelper {
 
         long rowId;
 
-
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_DATE_NAME, date);
         contentValues.put(COLUMN_PLAN_NAME, plan);
 
-        boolean exists = getPlan(date).split(":")[0].equals("1");
+        getPlan(date);
+        boolean exists = isSuccessful;
 
         boolean isEmpty = plan.trim().equals("");
 
@@ -81,10 +83,12 @@ public class PlannerDatabase extends SQLiteOpenHelper {
 
         Cursor c = database.rawQuery(selectQuery, null);
         if (c.moveToFirst()) {
-            return "1:" + c.getString(0);
+            isSuccessful = true;
+            return c.getString(0);
         } else {
-            Toast.makeText(context, "test", Toast.LENGTH_SHORT).show();
-            return "0:";
+            isSuccessful = false;
+            // Toast.makeText(context, "test", Toast.LENGTH_SHORT).show();
+            return "";
         }
     }
 

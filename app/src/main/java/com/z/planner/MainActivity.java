@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.CalendarView;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 
@@ -56,7 +55,11 @@ public class MainActivity extends AppCompatActivity {
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int dayOfMonth) {
                 long time = calendarView.getDate();
                 String date = new SimpleDateFormat("dd/MM/yyyy").format(time);
-                editText.setText(plannerDatabase.getPlan(date).split(":")[1]);
+                try {
+                    editText.setText(plannerDatabase.getPlan(date));
+                } catch (Exception e) {
+                    editText.setText("");
+                }
             }
         });
 
@@ -69,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
         plannerDatabase.storePlan(date, text.toString());
 
         String stored = plannerDatabase.getPlan(date);
-        //Toast.makeText(this, stored, Toast.LENGTH_SHORT).show();
     }
 
 }

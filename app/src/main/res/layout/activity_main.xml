@@ -31,6 +31,7 @@
         android:ems="10"
         android:hint="Zadajte text..."
         android:inputType="textMultiLine"
+        android:maxLines="5"
         android:windowSoftInputMode="adjustResize"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
